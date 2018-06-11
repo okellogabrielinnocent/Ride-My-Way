@@ -1,23 +1,48 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-    <title>Ride My Way</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="sylesheet" type="text/css" href="css/main.css">
+  <title>Ride My Way</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel = "stylesheet" type = "text/css" href = "css/main.css" />
 </head>
-
 <body>
-    <div id="container">
-        <div class="header"></div>
-        <div id="navbar">
-            <a href="/"></a>
-            <a href="/"></a>
+    <div class="top-container">
+        <div class="imgcontainer">
+            <img src="images/img_avatar2.png" alt="Avatar" class="avatar">
         </div>
-        <div class="footer"></div>
+      <h1>Scroll Down</h1>
+      <p>Scroll down to see the sticky effect.</p>
     </div>
 
+    <div class="header" id="myHeader">
+      <h2>Ride My Way</h2>
+    </div>
 
+    <div class="content">
+        <form action="/action_page.php">
+            
+          <div class="container">
+            <label for="uname"><b>Username</b></label>
+            <input type="text" placeholder="Enter Username" name="uname" required>
+        
+            <label for="psw"><b>Password</b></label>
+            <input type="password" placeholder="Enter Password" name="psw" required>
+                
+            <button type="submit">Login</button>
+            <label>
+              <input type="checkbox" checked="checked" name="remember"> Remember me
+            </label>
+          </div>
+        
+          <div class="container" style="background-color:#f1f1f1">
+            <button type="button" class="cancelbtn">Cancel</button>
+            <span class="psw">Don't have account <a href="register.html">Register</a></span>
+            <span class="psw">Forgot <a href="#">password?</a></span>
+          </div>
+        </form>
+      
+    </div>
+  <script src="js/javaScript.js"></script>
+  
 </body>
-
 </html>
