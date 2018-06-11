@@ -1,0 +1,16 @@
+@charset "UTF-8";
+html,
+body {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    text-align: center;
+    font: 100% DroidSerif, Georgia, "Times New Roman", Times, serif;
+    background: #3C6B92;
+    background: -moz-linear-gradient(top, #3c6b92 15%, #e1d8b9 90%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(15%, #3c6b92), color-stop(90%, #e1d8b9));
+    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#3c6b92', endColorstr='#e1d8b9', GradientType=0);
+    margin: 0;
+}
