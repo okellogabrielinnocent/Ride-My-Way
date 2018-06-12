@@ -8,10 +8,8 @@
 <body>
     <div class="top-container">
         <div class="imgcontainer">
-            <img src="images/img_avatar2.png" alt="Avatar" class="avatar">
+            <img src="images/logo.png" alt="logo" class="logo">
         </div>
-      <h1>Scroll Down</h1>
-      <p>Scroll down to see the sticky effect.</p>
     </div>
 
     <div class="header" id="myHeader">
@@ -19,25 +17,16 @@
     </div>
 
     <div class="content">
-        <form action="/action_page.php">
-            
-          <div class="container">
-            <label for="uname"><b>Username</b></label>
-            <input type="text" placeholder="Enter Username" name="uname" required>
-        
-            <label for="psw"><b>Password</b></label>
-            <input type="password" placeholder="Enter Password" name="psw" required>
-                
-            <button type="submit">Login</button>
-            <label>
-              <input type="checkbox" checked="checked" name="remember"> Remember me
-            </label>
-          </div>
-        
-          <div class="container" style="background-color:#f1f1f1">
-            <button type="button" class="cancelbtn">Cancel</button>
+        <form id="login_form" class="form-signin" method="post">
+        <h3 class="form-signin-heading"><i class="icon-lock"></i> Please Login</h3>
+        <hr>
+          <input type="text" class="input-block-level" id="email" name="email" placeholder="Email" required="">
+            <input type="password" class="input-block-level" id="password" name="password" placeholder="Password" required="">
+              <button id="login1" name="login" class="btn btn-success" type="submit" data-original-title="Click to Login">Sign in
+              </button>
+              <div class="container">
             <span class="psw">Don't have account <a href="register.html">Register</a></span>
-            <span class="psw">Forgot <a href="#">password?</a></span>
+            <span class="psw">Forgot <a href="#">Password?</a></span>
           </div>
         </form>
       
