@@ -42,6 +42,40 @@ body {
       display: inline-block;
 
   }
+  .topnav {
+    overflow: hidden;
+    
+}
+.topnav a.active {
+    background-color: #4CAF50;
+    color: white;
+  }
+  
+  .topnav-right {
+    float: right;
+  }
+
+/* Style the topnav links */
+.topnav a {
+    float: left;
+    display: block;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+/* Change color on hover */
+.topnav a:hover {
+    background-color: #ddd;    
+}
+ 
+/* Middle column */
+.column.middle {
+    width: 100%;
+    align-content: center;
+}
+
 .form-signin {
     max-width: 500px;
     padding: 19px 29px 29px;
@@ -119,5 +153,8 @@ span.psw {
     }
     .cancelbtn {
        width: 100%;
+    }
+    .column.side, .column.middle {
+        width: 100%;
     }
 }
