@@ -1,9 +1,9 @@
-window.onscroll = function() {myFunction()};
+window.onscroll = function() {myHeader();};
 
-const header = document.getElementById("myHeader");
-const sticky = header.offsetTop;
+var header = document.getElementById("myHeader");
+var sticky = header.offsetTop;
 
-function myFunction() {
+function myHeader() {
   if (window.pageYOffset >= sticky) {
     header.classList.add("sticky");
   } else {
@@ -11,7 +11,10 @@ function myFunction() {
   }
 }
 
-$(document).ready(function(){
-  $('#login1').tooltip('show');
-  $('#login1').tooltip('hide');
-});
+
+//notification
+function launch_notification() {
+  var note = document.getElementById("notice");
+  note.className = "show";
+  setTimeout(function(){ note.className = note.className.replace("show", ""); }, 5000);
+}
