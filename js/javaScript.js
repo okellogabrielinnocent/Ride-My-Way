@@ -1,9 +1,9 @@
-window.onscroll = function() {myHeader();};
+window.onscroll = function() {myFunction()};
 
-var header = document.getElementById("myHeader");
-var sticky = header.offsetTop;
+const header = document.getElementById("myHeader");
+const sticky = header.offsetTop;
 
-function myHeader() {
+function myFunction() {
   if (window.pageYOffset >= sticky) {
     header.classList.add("sticky");
   } else {
@@ -11,10 +11,7 @@ function myHeader() {
   }
 }
 
-
-//notification
-function launch_notification() {
-  var note = document.getElementById("notice");
-  note.className = "show";
-  setTimeout(function(){ note.className = note.className.replace("show", ""); }, 5000);
-}
+$(document).ready(function(){
+  $('#login1').tooltip('show');
+  $('#login1').tooltip('hide');
+});
