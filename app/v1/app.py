@@ -29,6 +29,7 @@ rides = [
 ]
 
 class Ride(Resource):
+    
     def get(self, name):
         for ride in rides:
             if(name == ride["name"]):

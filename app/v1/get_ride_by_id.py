@@ -47,7 +47,7 @@ def createride():
 def deleteride(ride_Id):
     em = [ ride for ride in rideDB if (ride['id'] == ride_Id) ]
     if len(em) == 0:
-        abort(404)
+        return em, 200 #Success or OK
     rideDB.remove(em[0])
     return jsonify({'response':'Success'})
 if __name__ == '__main__':
