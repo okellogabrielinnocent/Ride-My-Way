@@ -16,7 +16,7 @@ rideDB=[
  ]
 
  #==Fetch all ride offers==
-@app.route('/app/v1/rides',methods=['GET'])
+@app.route('/app/v1/rides', methods=['GET'])
 def get_All_ride():
     return jsonify({'rides':rideDB})
 

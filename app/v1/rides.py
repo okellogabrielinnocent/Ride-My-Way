@@ -2,7 +2,7 @@ from flask import Flask, jsonify
 
 app = Flask(__name__)
 
-rides = [
+rides_struct = [
     {
         'id': 1,
         'title': u'Buy groceries',
@@ -19,7 +19,7 @@ rides = [
 
 @app.route('/app/v1/rides', methods=['GET'])
 def get_rides():
-    return jsonify({'rides': rides})
+    return jsonify({'rides': rides_struct})
 
 if __name__ == '__main__':
     app.run(debug=True)
