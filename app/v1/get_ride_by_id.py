@@ -17,13 +17,18 @@ rideDB=[
 
  #==Fetch all ride offers==
 @app.route('/app/v1/rides',methods=['GET'])
-def getAllride():
+def get_All_ride():
     return jsonify({'rides':rideDB})
 
 @app.route('/app/v1/rides/<ride_id>',methods=['GET'])
-def getride(ride_id):
+def get_ride(ride_id):
     usr = [ ride for ride in rideDB if (ride['id'] == ride_id) ] 
     return jsonify({'ride':usr})
+
+@app.route('/app/v1/rides/<ride_id>/requests',methods=['GET'])
+def request_ride(tittle):
+    rqts = [ ride for ride in rideDB if (ride['id'] == tittle) ] 
+    return jsonify({'ride':rqts})
     
 @app.route('/app/v1/rides/<ride_Id>',methods=['PUT'])
 def updateride(ride_Id):
