@@ -1,7 +1,31 @@
 import os
 
-# You need to replace the next values with the appropriate values for your configuration
-# basedir = os.path.abspath(os.path.dirname(__file__))
-# SQLALCHEMY_ECHO = False
-# SQLALCHEMY_TRACK_MODIFICATIONS = True
-# SQLALCHEMY_DATABASE_URI = "postgresql://username:password@localhost/database_name"
+
+class Config(object):
+    """Parent configuration class."""
+    DEBUG = False
+
+
+
+
+class DevelopmentConfiguration(Config):
+    """Configurations for Development."""
+    DEBUG = True
+
+
+class TestingConfiguration(Config):
+    """Configurations for Testing."""
+    TESTING = True
+    DEBUG = True
+
+
+class ProductionConfiguration(Config):
+    """Configurations for Production."""
+    DEBUG = False
+
+configuration = {
+    'DEFAULT': DevelopmentConfiguration,
+    'TESTING': TestingConfiguration,
+    'DEVELOPMENT': DevelopmentConfiguration,
+    'PRODUCTION': ProductionConfiguration
+}

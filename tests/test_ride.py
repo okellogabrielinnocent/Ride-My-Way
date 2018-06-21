@@ -1,5 +1,4 @@
-from flask import jsonify
-from flask import Flask, request, Response, json
+from flask import Flask, request, Response, json, jsonify
 import unittest
 
 rideDB=[

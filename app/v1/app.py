@@ -33,8 +33,8 @@ class Ride(Resource):
     def get(self, name):
         for ride in rides:
             if(name == ride["name"]):
-                return ride, 200 #Success or OK
-        return "ride not found", 404 #page not fund
+                return ride, 200                #Success or OK
+        return "ride not found", 404            #page not fund
 
     def post(self, name):
         parser = reqparse.RequestParser()
