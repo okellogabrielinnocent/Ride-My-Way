@@ -8,3 +8,4 @@ Ride-my App is a carpooling application that provides drivers with the ability t
 
 ---
 [![Coverage Status](https://coveralls.io/repos/github/okellogabrielinnocent/Ride-My-Way/badge.svg)](https://coveralls.io/github/okellogabrielinnocent/Ride-My-Way)
+

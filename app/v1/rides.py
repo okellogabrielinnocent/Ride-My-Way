@@ -69,19 +69,7 @@ def getride(ride_id):
     usr = [ ride for ride in rideDB if (ride['id'] == ride_id) ] 
     return jsonify({'ride':usr}),200
 
-#@app.route('/app/v1/rides',methods=['POST'])
-#def createride():
-#    dat = {
-#    'id':request.json['id'],
-#    'd_name':request.json['d_name'],
-#    'departure_time':request.json['departure_time'],
-#    'origin':request.json['origin'],
-#    'destination':request.json['destination'],
-#    'cost':request.json['cost'],
-#    'status':request.json['status']
-#    }
-#    rideDB.append(dat)
-#    return jsonify(dat),201
+
 @app.route('/app/v1/rides',methods=['POST'])
 def create_ride():
     if not request.json or not 'd_name' in request.json:
@@ -100,9 +88,14 @@ def create_ride():
         
 @app.route('/app/v1/rides/<ride_Id>',methods=['PUT'])
 def updateride(ride_Id):
+    
     rid = [ ri for ri in rideDB if (ri['id'] == ride_Id) ]
+    if 'id' in request.json : 
+        rid[0]['id'] = request.json['id']
     if 'd_name' in request.json : 
         rid[0]['d_name'] = request.json['d_name']
+    if 'departure_time' in request.json:
+        rid[0]['departure_time'] = request.json['departure_time']
     if 'origin' in request.json : 
         rid[0]['origin'] = request.json['origin']
     if 'destination' in request.json : 
@@ -111,10 +104,10 @@ def updateride(ride_Id):
         rid[0]['status'] = request.json['status']
     if 'cost' in request.json : 
         rid[0]['cost'] = request.json['cost']
-    if 'departure_time' in request.json:
-        rid[0]['departure_time'] = request.json['departure_time']
-    return jsonify({'ri':rid[0]})
     
+        
+        rides.append(ride)
+        return jsonify({'ride':rid[0]}), 201
 
 @app.route('/app/v1/rides/<ride_Id>',methods=['DELETE'])
 def deleteride(ride_Id):
@@ -128,4 +121,4 @@ def deleteride(ride_Id):
 def not_found(error):
     return make_response(jsonify({'error': 'Not found'}), 404)
 if __name__ == '__main__':
- app.run()
+    app.run()
