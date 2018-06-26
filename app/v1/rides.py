@@ -66,7 +66,8 @@ def getAllride():
 
 @app.route('/app/v1/rides/<ride_id>',methods=['GET'])
 def getride(ride_id):
-    usr = [ ride for ride in rideDB if (ride['id'] == ride_id) ] 
+    usr = [ ride for ride in rideDB if (ride['id'] == ride_id) ]
+    
     return jsonify({'ride':usr}),200
 
 

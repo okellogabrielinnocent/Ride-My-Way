@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request, make_response
+from flask import Flask, jsonify, request, make_response, json
 import unittest
 from rides import rideDB
 from rides import app
@@ -16,9 +16,12 @@ class rides_test(unittest.TestCase):
                 response = jsonify({'rides':rideDB})
                 self.assertEqual(response.status_code, 200)
 
-        def test_getride(self,ride_id):
-                response = jsonify({'ride':2})
-                self.assertEqual(response.status_code, 200)
+        def test_getride(self):
+                for ride in rideDB:
+                        response = self.client.get('/app/v1/rides/<ride_id>'.format(ride['id']))
+                        self.assertEqual(response.status_code, 201)
+
+                
 
         def test_create_ride(self):
                 
@@ -33,9 +36,14 @@ class rides_test(unittest.TestCase):
                         "status":"accepted"
                         }
                 
-                client = app.test_client(self)       
-                response =jsonify({'ride': ride})
-                self.assertEqual(response,201)
+                
+
+                response = self.client.post('/app/v1/rides',
+                              data=json.dumps(ride),
+                              content_type='application/json',
+                              follow_redirects=True)
+                self.assertEqual(response.status_code, 201)
+                json_response = json.loads(response.get_data(as_text=True))
 
         def test_index(self):
                 client = app.test_client(self)
