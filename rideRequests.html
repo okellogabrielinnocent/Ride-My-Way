@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Ride My Way</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-16x16.png">
+    <link rel = "stylesheet" type = "text/css" href = "css/main.css"/>
+  </head>
+  <body>
+      <div class="top-container">
+          <div class="imgcontainer">
+            <img src="images/logo.png" alt="logo" class="logo">
+          </div>
+        <h2>Ride My Way</h2>
+      </div>
+      <div class="header" id="myHeader">
+        <div class="topnav">          
+          <a href="#" class="info" onclick="launch_notification()">15</a>
+          <div class="topnav-right">
+            <a href="register.html">Signup</a>
+            <a href="login.html">Login</a>
+          </div>
+        </div>
+      </div>
+      <!--container for main content just below the header-->
+      <div class="container">
+        <!--Profile bar-->
+          <div class="column">
+              <article>
+                  <div class="card-header">
+                    <img class="profile-photo" src="images/profile.jpg" alt="profile">
+                    <a href="home.html"><button type="button">GIO</button></a>
+                  </div>
+                  <ul class="card-links">
+                      <a href="availableRides.html">
+                          <li>
+                              <i class="icon icon-list-alt"></i><span class="label">Avialable Rides</span><span class="label-notification label-active">44</span>
+                          </li>
+                      </a>
+                    <a href="rideRequests.html">
+                      <li>
+                        <i class="icon icon-list-alt"></i><span class="label">Ride Requests</span><span class="label-notification label-active">44</span>
+                      </li>
+                    </a>
+                    <hr>
+                    <a href="#">
+                      <li>
+                        <i class="ridesTaken.html"></i><span class="label">Rides Given</span><span class="label-notification label-active">25</span>
+                      </li>
+                    </a>
+                    <hr>
+                    <a href="#">
+                        <li>
+                          <i class="ridesTaken.html"></i><span class="label">Rides Taken</span><span class="label-notification label-active">20</span>
+                        </li>
+                      </a>
+                      <hr>
+                    <a href="#">
+                      <li class="link-favorites">
+                        <i class="ridesTaken.html"></i><span class="label">Rides Rejected</span><span class="label-notification">174</span>
+                      </li>
+                    </a>
+                  </ul>
+                </article>
+          </div>
+            <!--End of profile-->
+            
+            <div id="notice">
+                <div id="img">GIO</div>
+                <div id="desc">From Kampala to the World...</div>
+            </div>
+            <div class="card">
+              <table>
+                <tr>
+                <td><b>ID</b></td>
+                <td><b>Driver</b></td>
+                <td><b>From</b></td>
+                <td><b>To</b></td>
+                <td><b>Departure Time</b></td>
+                <td colspan="2"><b>Action</b></td>
+                </tr>
+                
+                
+               <!-- {% for item in result.results %}-->
+                <tr>
+                <td><!--<a href="/user/{{ item["id"] }}">{{ item["id"] }}</a>-->#01</td>
+                <td><!--{{ item["name"] }}-->Gabriel Okello</td>
+                <td>Kampala</td>
+                <td>Kisaasi</td>
+                <td><!--{{ item["mail"] }}-->12:30 am</td>
+                <td><p>
+                  <a href="home.html" class="acceptbtn">Accept </a>
+                  <a href="#" class="cancelbtn">Reject</a>                
+                </p></td>
+                <!--<td><a href="/user/edit/{{ item["id"] }}">edit</a></td>
+                <td><a href="/user/delete/{{ item["id"] }}">delete</a></td>-->
+                </tr>
+                <!--{% endfor %}-->
+                </table>
+                
+            </div>
+            <div class="card">
+              <table>
+                <tr>
+                <td><b>ID</b></td>
+                <td><b>Driver</b></td>
+                <td><b>From</b></td>
+                <td><b>To</b></td>
+                <td><b>Departure Time</b></td>
+                <td colspan="2"><b>Action</b></td>
+                </tr>
+                
+                
+               <!-- {% for item in result.results %}-->
+                <tr>
+                <td><!--<a href="/user/{{ item["id"] }}">{{ item["id"] }}</a>-->#01</td>
+                <td><!--{{ item["name"] }}-->Gabriel Okello</td>
+                <td>Kampala</td>
+                <td>Kisaasi</td>
+                <td><!--{{ item["mail"] }}-->12:30 am</td>
+                <td><p>
+                  <a href="home.html" class="acceptbtn">Accept </a>
+                  <a href="#" class="cancelbtn">Reject</a>                
+                </p></td>
+                <!--<td><a href="/user/edit/{{ item["id"] }}">edit</a></td>
+                <td><a href="/user/delete/{{ item["id"] }}">delete</a></td>-->
+                </tr>
+                <!--{% endfor %}-->
+                </table>
+                
+            </div>
+            
+            <div class="card">
+              <table>
+                <tr>
+                <td><b>ID</b></td>
+                <td><b>Driver</b></td>
+                <td><b>From</b></td>
+                <td><b>To</b></td>
+                <td><b>Departure Time</b></td>
+                <td colspan="2"><b>Action</b></td>
+                </tr>
+                
+                
+               <!-- {% for item in result.results %}-->
+                <tr>
+                <td><!--<a href="/user/{{ item["id"] }}">{{ item["id"] }}</a>-->#01</td>
+                <td><!--{{ item["name"] }}-->Gabriel Okello</td>
+                <td>Kampala</td>
+                <td>Kisaasi</td>
+                <td><!--{{ item["mail"] }}-->12:30 am</td>
+                <td><p>
+                  <a href="home.html" class="acceptbtn">Accept </a>
+                  <a href="#" class="cancelbtn">Reject</a>                
+                </p></td>
+                <!--<td><a href="/user/edit/{{ item["id"] }}">edit</a></td>
+                <td><a href="/user/delete/{{ item["id"] }}">delete</a></td>-->
+                </tr>
+                <!--{% endfor %}-->
+                </table>
+                
+            </div>
+            <div class="card">
+              <table>
+                <tr>
+                <td><b>ID</b></td>
+                <td><b>Driver</b></td>
+                <td><b>From</b></td>
+                <td><b>To</b></td>
+                <td><b>Departure Time</b></td>
+                <td colspan="2"><b>Action</b></td>
+                </tr>
+                
+                
+               <!-- {% for item in result.results %}-->
+                <tr>
+                <td><!--<a href="/user/{{ item["id"] }}">{{ item["id"] }}</a>-->#01</td>
+                <td><!--{{ item["name"] }}-->Gabriel Okello</td>
+                <td>Kampala</td>
+                <td>Kisaasi</td>
+                <td><!--{{ item["mail"] }}-->12:30 am</td>
+                <td><p>
+                  <a href="home.html" class="acceptbtn">Accept </a>
+                  <a href="#" class="cancelbtn">Reject</a>                
+                </p></td>
+                <!--<td><a href="/user/edit/{{ item["id"] }}">edit</a></td>
+                <td><a href="/user/delete/{{ item["id"] }}">delete</a></td>-->
+                </tr>
+                <!--{% endfor %}-->
+                </table>
+                
+            </div>
+                
+            <div class="card">
+              <table>
+                <tr>
+                <td><b>ID</b></td>
+                <td><b>Driver</b></td>
+                <td><b>From</b></td>
+                <td><b>To</b></td>
+                <td><b>Departure Time</b></td>
+                <td colspan="2"><b>Action</b></td>
+                </tr>
+                
+                
+               <!-- {% for item in result.results %}-->
+                <tr>
+                <td><!--<a href="/user/{{ item["id"] }}">{{ item["id"] }}</a>-->#01</td>
+                <td><!--{{ item["name"] }}-->Gabriel Okello</td>
+                <td>Kampala</td>
+                <td>Kisaasi</td>
+                <td><!--{{ item["mail"] }}-->12:30 am</td>
+                <td><p>
+                  <a href="home.html" class="acceptbtn">Accept </a>
+                  <a href="#" class="cancelbtn">Reject</a>                
+                </p></td>
+                <!--<td><a href="/user/edit/{{ item["id"] }}">edit</a></td>
+                <td><a href="/user/delete/{{ item["id"] }}">delete</a></td>-->
+                </tr>
+                <!--{% endfor %}-->
+                </table>
+                
+            </div>
+              <div class="card">
+                  <h1>Ride</h1>
+                  <p class="card_title">From Success to Excellence</p>
+                  <p>GIO</p> 
+                  <p>
+                      <a href="#" class="acceptbtn">View </a>
+                    <a href="#" class="acceptbtn">Accept </a>
+                    <a href="#" class="cancelbtn">Reject</a>                
+                  </p>
+              </div>
+                
+              <div class="card">
+                <h1>Ride</h1>
+                <p class="card_title">From Success to Excellence</p>
+                <p>GIO</p>
+                <p></p>
+                <a href="#" class="acceptbtn">View </a>
+                  <a href="#" class="acceptbtn">Accept </a>
+                  <a href="#" class="cancelbtn">Reject</a>                
+                </p>
+              </div>
+        </div>
+      <script src="js/javaScript.js"></script>
+    </body>
+</html>

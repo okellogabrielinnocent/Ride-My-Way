@@ -99,7 +99,7 @@ body {
   }
   
   .card-links a li.active {
-    border-left: 1px solid  #2487c9 !important;
+    border-left: 1px solid  #4CAF50 !important;
     background: #f6f6f6;
     color: #44474a;
   }
