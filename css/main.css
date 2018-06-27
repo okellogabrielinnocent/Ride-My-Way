@@ -194,10 +194,12 @@ body {
 /*side column*/
 .column {
     float: left;
-    width: 30%;
+    width: 140px;
     padding: 15px;
 }
-
+table{
+    max-width: 950px;
+}
 /*Login*/
 .form-signin,.form-signup,.form-editpass {
     max-width: 500px;
@@ -276,12 +278,7 @@ a {
     color: black;
 }
 
-/* request text area*/
-.requestArea{
-    border-radius:.5em;
-    max-width: 60%;
-    
-}
+
 /*notification*/
 .info{
     background-image:url("../images/notification.png");
