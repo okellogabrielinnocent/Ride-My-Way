@@ -10,7 +10,7 @@ rideDB=[
         'origin':'Kisaasi',
         'destination':'Andela',
         "cost":"200Shs", 
-        'status':True
+        'status':"False"
         },
         {
         'id':'2',
@@ -19,7 +19,7 @@ rideDB=[
         'origin':'Kisaasi',
         'destination':'Andela',
         "cost":"200Shs", 
-        'status':True
+        'status':"True"
         },
         {
         'id':3,
@@ -28,7 +28,7 @@ rideDB=[
         'origin':'Kisaasi',
         'destination':'Andela',
         "cost":"200Shs", 
-        'status':True
+        'status':"True"
         },
         {
         'id':'4',
@@ -37,7 +37,7 @@ rideDB=[
         'origin':'Kisaasi',
         'destination':'Andela',
         "cost":"200Shs", 
-        'status':True
+        'status':"True"
         },
         {
         'id':'5',
@@ -46,7 +46,7 @@ rideDB=[
         'origin':'Kisaasi',
         'destination':'Andela',
         "cost":"200Shs", 
-        'status':True
+        'status':"True"
         },
         {
         'id':'6',
@@ -55,7 +55,7 @@ rideDB=[
         'origin':'Kisaasi',
         'destination':'Andela',
         "cost":"200Shs", 
-        'status':True
+        'status':"True"
         },
  ]
 
@@ -66,8 +66,8 @@ def getAllride():
 #==Fetch ride by id ==
 @app.route('/api/v1/rides/<ride_id>',methods=['GET'])
 def getride(ride_id):
-    usr = [ ride for ride in rideDB if (ride['id'] == ride_id) ] 
-    return jsonify({'ride':usr}),200
+    request = [ ride for ride in rideDB if (ride['id'] == ride_id) ] 
+    return jsonify({'ride':request}),200
 
 #==Create ride offers==
 @app.route('/api/v1/rides',methods=['POST'])
@@ -81,22 +81,21 @@ def create_ride():
         'origin':request.json['origin'],
         'destination':request.json['destination'],
         'cost':request.json['cost'],
-        'status':True
+        'status':"True"
         }
     rideDB.append(ride)
     return jsonify({'ride': ride}), 201
 
+#==request to join ride offers==
 @app.route('/api/v1/rides/<ride_id>/requests', methods=['POST',])
 def request_to_join_ride(ride_id):
-        for ride in rides:
-            if ride['Id'] == ride_id:
-                ride['status'] == True
-                requests.append(ride)
-                return "A request to join this ride has been sent"
+    for ride in rides:
+        if ride['id']:
+            ride['status'] == True
+            rideDB.append(ride)
+            return "A request has been sent" 
 
-
-
-
+#==customesid error report==
 @app.errorhandler(404)
 def not_found(error):
     return make_response(jsonify({'error': 'Not found'}), 404)
