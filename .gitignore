@@ -1,6 +1,7 @@
-env
+epycache__
+htmnv
 .vscode
-__pycache__
-htmlcov
+__lcov
 git
 .pytest_catch
+env
