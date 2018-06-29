@@ -1,9 +1,9 @@
-""" Tests module """
+
 import unittest
 from flask import json
 
 # from app import create_app,
-from rides import app
+from api.rides import app
 
 class rides_test(unittest.TestCase):
         
