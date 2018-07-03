@@ -5,3 +5,13 @@ __lcov
 git
 .pytest_catch
 env
+user_register
+db
+dbapp
+auth
+.idea
+js
+templates
+images
+css
+

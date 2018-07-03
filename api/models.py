@@ -1,63 +1,12 @@
-from flask import make_response
-
-rides = [{
-        'ride_id':'1',
-        'd_name':'Gabriel',
-        'departure_time':'12:15 am',
-        'origin':'Kisaasi',
-        'destination':'Andela',
-        "cost":"200Shs", 
-        'status':"False"
-        },
-        {
-        'ride_id':'2',
-        'd_name':'Okello',
-        'departure_time':'12:15 am',
-        'origin':'Kisaasi',
-        'destination':'Andela',
-        "cost":"200Shs", 
-        'status':"True"
-        },
-        {
-        'ride_id':3,
-        'd_name':'Innocent',
-        'departure_time':'12:15 am',
-        'origin':'Kisaasi',
-        'destination':'Andela',
-        "cost":"200Shs", 
-        'status':"True"
-        },
-        {
-        'ride_id':'4',
-        'd_name':'Susan',
-        'departure_time':'12:15 am',
-        'origin':'Kisaasi',
-        'destination':'Andela',
-        "cost":"200Shs", 
-        'status':"True"
-        },
-        {
-        'ride_id':'5',
-        'd_name':'Abram',
-        'departure_time':'12:15 am',
-        'origin':'Kisaasi',
-        'destination':'Andela',
-        "cost":"200Shs", 
-        'status':"True"
-        },
-        {
-        'ride_id':'6',
-        'd_name':'Eunice',
-        'departure_time':'12:15 am',
-        'origin':'Kisaasi',
-        'destination':'Andela',
-        "cost":"200Shs", 
-        'status':"True"
-        }]
-
+from flask import make_response, abort, request,jsonify, reqparse
+from .tb import Database
+import psycopg2
 
 JSON_MIME_TYPE = 'application/json'
 
+
+
+c = Database.conn
 class Ride(object):
     # A Rides class
 
@@ -70,46 +19,125 @@ class Ride(object):
         self.date = date
         self.status = status
 
+
+    @classmethod
+    def get_rides(self):
+        cur = c.cursor()
+        cur.execute("SELECT *  from rides")
+        rows = cur.fetchall()
+        for row in rows:
+            print ("ride_id = "), row[0]
+            print ("d_name = "), row[1]
+            print ("origin = "), row[2]
+            print ("destination = "), row[3]
+            print ("status = "), row[4]
+            print ("cost = "), row[4]
+            print ("departure_time = "), row[5], "\n"
+
+            print ("Avilaible ride")
+        c.close()
+
+
+
+
 #get ride by id
     @classmethod
-    def get_ride(cls, ride_id):
-        for ride in rides:
-            if ride['ride_id'] == ride_id:
-                return ride
-                
-    # check existing ride object
-    @classmethod
-    def existing_ride(cls, origin, destination, date):
-        for ride in rides:
-            if ride['origin'] == origin and ride['destination'] == destination and ride['date'] == date:
-                return True
-        else:
-            return False
-    #post ride method
-    @classmethod
-    def post_ride(cls, origin,d_name, destination, date):
+    def get_ride(self, ride_id):
+        cur = c.cursor()
+        cur.execute("SELECT *  from rides  where ride_id = %s,(ride_id)")
+        rows = cur.fetchone()
+        for row in rows:
+            print ("ride_id = "), row[0]
+            print ("d_name = "), row[1]
+            print ("origin = "), row[2]
+            print ("destination = "), row[3]
+            print ("status = "), row[4]
+            print ("cost = "), row[4]
+            print ("departure_time = "), row[5], "\n"
+
+            print ("Avilaible ride")
+        c.close()
+
         
-        cls.data = {}
-        if cls.existing_ride(origin, destination, date):
-            return "ride already exists"
-        else:          
-            cls.data['id'] = id
-            cls.data['origin'] = origin
-            cls.data['d_name'] = d_name
-            cls.data['destination'] = destination
-            cls.data["date"] = date
-            cls.data["status"] = "False"
-
-            rides.append(cls.data)
-            return "Ride offered"
+                
+       
 
     @classmethod
-    def join_ride(cls, ride_id):
+    def post_ride(self, data):
+        parser = reqparse.RequestParser()
+        parser.add_argument("origin")
+        parser.add_argument("destination")
+        parser.add_argument("cost")
+        parser.add_argument("departure_time")
+        args = parser.parse_args()
+
         for ride in rides:
-            if ride['id'] == ride_id:
-                ride['status'] == "True"
-                rides.append(ride)
-                return "A request to join this ride has been sent"
+            if(name == ride["name"]):
+                return "Ride with name {} already exists".format(name), 400
+
+        ride = {
+            "name": name,
+            "origin": args["origin"],
+            "destination": args["destination"],
+            "cost": args["cost"],
+            "departure_time":args["departure_time"]
+        }
+        rides.append(ride)
+        return ride, 201
+        cur = c.cursor()
+        try:
+            cur.execute("INSERT INTO rides(ride_id,d_name,origin,destination,departure_time,cost,status)"
+                           " VALUES(%s, %s, %s, %s, %s, %s, $s)",
+                           (data['ride_id'], data['d_name'], data['origin'], data['destination'], data['departure_time']
+                            , data['cost'], data['status'],))
+            
+            
+            c.commit()
+
+            return True
+        except:
+            c.rollback()
+
+            return False
+        finally:
+            c.close()
+
+
+       
+    @classmethod
+    def update_ride(cls,ride_id,data):
+        cur = c.cursor()
+        ride = [ride for ride in data if ride['ride_id'] == ride_id]
+        if len(ride) == 0:
+            abort(404)
+        if not request.json:
+            abort(400)
+        if 'origin' in request.json and type(request.json['origin']):
+            abort(400)
+        if 'd_name' in request.json and type(request.json['d_name']):
+            abort(400)
+        if 'destination' in request.json and type(request.json['destination']) is not bool:
+            abort(400)
+        if 'date' in request.json and type(request.json['date']):
+            abort(400)
+        if 'date' in request.json and type(request.json['date']):
+            abort(400)
+        if 'status' in request.json and type(request.json['status']) is  bool:
+            abort(400)
+
+        try:
+            cur.execute("UPDATE rides set d_name = %s, origin = %s, destination = %s,"
+                           " departure_time = %s, cost = $s where ride_id = %s",
+                           (data['ride_id'], data['d_name'], data['origin'], data['destination'], data['departure_time']
+                            , data['cost'], data['status'],))
+            c.commit()
+
+            return True
+        except:
+            c.rollback()
+
+            return False
+
 
     # define json response header
     @classmethod
