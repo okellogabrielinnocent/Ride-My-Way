@@ -1,9 +1,8 @@
-
+from api.utilities import Database
 from test_base import rides_test
 import unittest
-from flask import json
-from rides import rideDB
-from rides import app
+from flask import json, Response
+
 
 """ Defines tests for the methods of for rides """     
 class TestRide(rides_test):
@@ -18,7 +17,7 @@ def test_request_to_join_ride(self):
 
     for ride in results:
         
-        response = self.client.post('/api/v1/rides/<ride_id>/requests'.format(ride['id']),
+        response = self.client.post('/rides/<ride_id>/requests'.format(ride['ride_id']),
                                     content_type='application/json',
                                     data=json.dumps({'status':True}))
         self.assertEqual(response.status_code, 201)
