@@ -1,6 +1,9 @@
 import psycopg2
 
 
+
+
+
 class Database:
         conn = psycopg2.connect(database="postgres", user="postgres", password="moschinogab", host="127.0.0.1",
                                 port="5432")
@@ -21,6 +24,14 @@ class Database:
                     date           varchar(200),
                     ride_status         boolean);'''
                     )
+
+
+        cur.execute('''CREATE TABLE IF NOT EXISTS requests
+                    (
+                    ride_id        serial not null,            
+                    user_id         integer);'''
+                    )
+
 
         cur.execute('''CREATE TABLE IF NOT EXISTS users
                     (

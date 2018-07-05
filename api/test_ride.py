@@ -46,6 +46,55 @@ class TestRide(rides_test):
             response = client.get('/login', content_type='application/json')
             self.assertEqual(response.status_code, 404)
 
+
+    def test_registor(self):
+        """ Test for user registration """
+        response = self.client.post(
+            '/auth/signup',
+            data=json.dumps(dict(
+                email='joe@gmail.com',
+                password='123456'
+            )),
+            content_type='application/json'
+        )
+        data = json.loads(response.data.decode())
+        self.assertFalse(data['result'] == 'success')
+        self.assertTrue(data['result'] == 'User Created')
+        self.assertTrue(data['auth_token'])
+        self.assertTrue(response.content_type == 'application/json')
+        self.assertEqual(response.status_code, 201)
+
+        response = self.client.post(
+            '/auth/signup',
+            data=json.dumps(dict(
+                email='joe@gmail.com',
+                password='123456'
+            )),
+        content_type='application/json'
+        )
+        data = json.loads(response.data.decode())
+        self.assertFalse(data['result'] == 'success')
+        self.assertTrue(data['result'] == 'Message :User with same email exists!')
+        self.assertTrue(data['auth_token'])
+        self.assertTrue(response.content_type == 'application/json')
+        self.assertEqual(response.status_code, 500)
+
+
+    
+def test_request_to_join_ride(self):
+    
+    results = json.loads(response.data.decode())
+
+
+    for ride in results:
+        
+        response = self.client.post('/rides/<ride_id>/requests'.format(ride['ride_id']),
+                                    content_type='application/json',
+                                    data=json.dumps({'status':True}))
+        self.assertEqual(response.status_code, 201)
+        self.assertIn("A request has been sent", str(response.data))
+
+
     def test_empty_query(self):
         cur = conn.cursor()
         self.assertRaises(psycopg2.ProgrammingError, cur.execute, "")

@@ -1,7 +1,14 @@
 from flask import make_response, abort, request,jsonify
+from flask_jwt import JWT, jwt_required, current_identity
+from werkzeug.security import safe_str_cmp
 from .utilities import Database
 import psycopg2
+import jwt
+from flask.views import MethodView
+import datetime
+import uuid 
 from psycopg2.extras import RealDictCursor
+
 #from passlib.hash import pbkdf2_sha256 as sha256
 
 
@@ -68,10 +75,7 @@ class Ride(object):
         SQL = ''' INSERT INTO rides (ride_id, d_name,origin,departure_time,destination,cost, ride_status) 
                     VALUES(%s, %s, %s, %s, %s, %s, %s)'''
         cur.execute(SQL,  (ride.ride_id, ride.d_name, ride.origin, ride.departure_time,ride.destination, ride.cost, ride.ride_status))
-
-        
-
-            
+           
             
        
     @classmethod
@@ -111,12 +115,35 @@ class User(object):
     
     def __init__(self, username, email,  password):
         # Initializes the ride object
-        self.username = username
+        
         self.email = email
-        self.password =password
-       
+        self.username = username
+        self.password = password
 
+    
+           
+    def authenticate(self,email, password):
+        
+        user = []
+        cur = c.cursor(cursor_factory=RealDictCursor)
+        cur.execute("SELECT *  from users WHERE email = %s")% self.email
+        user= cur.fetchone()
+        if user and safe_str_cmp(user.password.encode('utf-8'), password.encode('utf-8')):
+            return user
+    
+
+    
+    def identity(self,payload):
+        userid_table = {}
+        cur = c.cursor(cursor_factory=RealDictCursor)
+        cur.execute("SELECT username  from users")
+        userid_table= cur.fetchone()
+        user_id = payload['identity']
+        return userid_table.get(user_id, None)
+    
+    
     @staticmethod
+    
     def post_user(user):
         cur = c.cursor(cursor_factory=RealDictCursor)
         SQL = ''' INSERT INTO users (username, email, password) 
@@ -124,44 +151,90 @@ class User(object):
         cur.execute(SQL, (user.username, user.email, user.password))
 
 
-'''class UserModel(c.Model):
-    __tablename__ = 'users'
-
-    id = c.Column(c.Integer, primary_key = True)
-    username = c.Column(c.String(120), unique = True, nullable = False)
-    password = c.Column(c.String(120), nullable = False)
-    
-    def save_to_c(self):
-        c.session.add(self)
-        c.session.commit()
-    
-    @classmethod
-    def find_by_username(cls, username):
-        return cls.query.filter_by(username = username).first()
-    
-    @classmethod
-    def return_all(cls):
-        def to_json(x):
-            return {
-                'username': x.username,
-                'password': x.password
-            }
-        return {'users': list(map(lambda x: to_json(x), UserModel.query.all()))}
-
-    
     @staticmethod
-    def generate_hash(password):
-        return sha256.hash(password)
     
-    @staticmethod
-    def verify_hash(password, hash):
-        return sha256.verify(password, hash)'''
+    def get_login(username, password):
+        cur = c.cursor(cursor_factory=RealDictCursor)
+        cur.execute("SELECT * FROM users WHERE username=%s AND password =%s",(username, password)) 
+        dbuser = cur.fetchone()
+        return  dbuser
+
+        
 
 
-    
+
+class Ride_request(object):
+    """ A class to handle actions related to requests"""
+
+    def __init__(self, request_id, user_id, request_status, ride_id):
+        # Initializes the ride object
+        self.request_id = request_id
+        self.user_id = user_id
+        self.ride_id =ride_id
+        self.requests_list = []
+
+        
 
 
-'''define json response header'''
+    def existing_request(self, origin, ride_id):
+        """A method to check if the same request exists """
+        for request_object in self.requests_list:
+            if request_object['origin'] == origin and request_object['ride_id'] == ride_id:
+                return True
+        else:
+            return False
+
+
+    def create_request(self,ride_request):
+        cur = c.cursor(cursor_factory=RealDictCursor)
+        SQL = ''' INSERT INTO requests (user_id, ride_id, request_status) 
+                    VALUES(%s, %s, %s)'''
+        cur.execute(SQL, (ride_request.user_id, ride_request.ride_id, ride_request.request_status))
+        
+
+    def fetch_all_requests(self):
+        "a method to fetch all requests"
+        cur = c.cursor(cursor_factory=RealDictCursor)
+        cur.execute("SELECT *  from rides WHERE ride_status='False'")
+        rows = cur.fetchall()
+        for row in rows:
+            print("ride_id = "), row[0]
+            print("d_name = "), row[1]
+            print("origin = "), row[2]
+            print("destination = "), row[3]
+            print("ride_status = "), row[4]
+            print("cost = "), row[4]
+            print("ride_status = "), row[5], "\n"
+
+            print("Avilaible ride Requests")
+        c.close()
+
+    def fetch_request_by_id(self, request_id):
+        """A method to f given an title of a request"""
+        for request_object in self.requests_list:
+            if request_object['request_id'] == request_id:
+                return request_object
+        return False
+
+    def modify_request(self, request_id, item, ride_status,
+                       origin, status):
+        """ Find a request with the given id and modify its details"""
+
+        for request_object in self.requests_list:
+            if request_object['request_id'] == request_id:
+                self.requests_list.remove(request_object)
+                request_object['item'] = item
+                request_object['ride_status'] = ride_status
+                request_object['origin'] = origin
+                request_object['status'] = status
+                request_object['request_id'] = request_id
+                self.requests_list.append(self.data)
+                return "request modifyied"
+        else:
+            return "no request with given id"
+            
+            
+
     
 def json_response(data='', status=200, headers=None):
     headers = headers or {}

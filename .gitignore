@@ -15,4 +15,5 @@ templates
 images
 css
 login_register
+__pycache__
 
