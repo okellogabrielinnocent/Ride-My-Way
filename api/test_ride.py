@@ -21,28 +21,52 @@ class TestRide(rides_test):
             
             response = self.client.get("/rides")
             self.assertEqual(response.status_code, 200)
+            
 
     def test_get_ride(self):
             response = self.client.get("/rides/<ride_id>")
             self.assertEqual(response.status_code, 200)
             self.assertEqual(response.content_type, 'application/json')
 
+    def test_post_ride(self):
+            response = self.client.post(data =True)
+            self.assertEqual(response.status_code, 200)
+            self.assertEqual(response.content_type, 'application/json')
+
+
+    def test_get_rides(self):
+        response = self.client.get(data =json.dumps(Ride))
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.content_type, 'application/json')
+
+
+    
+    def test_post_user(self):
+        response = self.client.post(data =json.dumps(User))
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.content_type, 'application/json')
+
+
+    def test_json_response(self):
+        response = self.client.get(data='')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.content_type, 'application/json')
+
 
     def test_create_ride(self):
-            response = self.client.get('/user/rides', content_type='application/json',
-                                        follow_redirects=True)
-            self.assertEqual(response.status_code, 201)
-            response = self.create_ride('gabriel@gmail.com', 'okello', 'innocent')
-            self.assertIn(b'Ride Created', response.data)
+        response = self.client.get('/user/rides', content_type='application/json',
+                                    follow_redirects=True)
+        self.assertEqual(response.status_code, 201)
+            
 
     def test_index(self):
-            response = client.get('/index', content_type='application/json')
-            self.assertEqual(response.status_code, 404)
+        response = self.client.get('/index', content_type='application/json')
+        self.assertEqual(response.status_code, 404)
 
     def test_get_login(self):
-            response = client.get('/login', content_type='application/json')
-            self.assertEqual(response.status_code, 200)
-            self.assertIn(b'usersame', response)
+        response = self.client.get('/login', content_type='application/json')
+        self.assertEqual(response.status_code, 200)
+        self.assertIn(b'usersame', response)
 
 
     def test_registor(self):
@@ -61,7 +85,7 @@ class TestRide(rides_test):
         response = self.client.post(
             '/auth/signup',
             data=json.dumps(dict(
-                email='joe@gmail.com',
+                email='gab@gmail.com',
                 password='123456'
             )),
         content_type='application/json'
