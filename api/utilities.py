@@ -1,9 +1,5 @@
 import psycopg2
 
-
-
-
-
 class Database:
         conn = psycopg2.connect(database="postgres", user="postgres", password="moschinogab", host="127.0.0.1",
                                 port="5432")

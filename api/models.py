@@ -1,13 +1,11 @@
-from flask import make_response, abort, request,jsonify
-from flask_jwt import JWT, jwt_required, current_identity
+from flask import make_response, abort, request,jsonify, json
 from werkzeug.security import safe_str_cmp
 from .utilities import Database
 import psycopg2
 import jwt
 from flask.views import MethodView
 import datetime
-import uuid 
-from psycopg2.extras import RealDictCursor
+from psycopg2.extras import DictCursor
 
 #from passlib.hash import pbkdf2_sha256 as sha256
 
@@ -32,7 +30,7 @@ class Ride(object):
 
     @classmethod
     def get_rides(cls):
-        cur = c.cursor(cursor_factory=RealDictCursor)
+        cur = c.cursor(cursor_factory=DictCursor)
         cur.execute("SELECT *  from rides")
         rows = cur.fetchall()
         for row in rows:
@@ -50,7 +48,7 @@ class Ride(object):
     '''get ride by id'''
     @classmethod
     def get_ride(cls):
-        cur = c.cursor(cursor_factory=RealDictCursor)
+        cur = c.cursor(cursor_factory=DictCursor)
         cur.execute("SELECT *  from rides  where ride_id = %s,(ride_id)")
         rows = cur.fetchone()
         for row in rows:
@@ -61,15 +59,15 @@ class Ride(object):
             print("ride_status = "), row[4]
             print("cost = "), row[5]
             print("departure_time = "), row[6].strftime("%b %d %Y %H:%M:%S", time.gmtime(t)), "\n"
-
-            print("Avilaible ride")
+            response = json.dumps(rows)
+            return jsonify(response)
         c.close()
 
 
     @staticmethod
     def post_ride(ride):
         
-        cur = c.cursor(cursor_factory=RealDictCursor)
+        cur = c.cursor(cursor_factory=DictCursor)
 
         
         SQL = ''' INSERT INTO rides (ride_id, d_name,origin,departure_time,destination,cost, ride_status) 
@@ -81,7 +79,7 @@ class Ride(object):
     @classmethod
     def update_ride(cls, ride_id):
         data=request.get_json()
-        cur = c.cursor(cursor_factory=RealDictCursor)
+        cur = c.cursor(cursor_factory=DictCursor)
         ride = [ride for ride in data if ride['ride_id'] == ride_id]
         if len(ride) == 0:
             abort(404)
@@ -109,61 +107,33 @@ class Ride(object):
             c.rollback()
 
             return False
-
-
+            
+            
 class User(object):
     
     def __init__(self, username, email,  password):
-        # Initializes the ride object
+        # Initializes the user object
         
         self.email = email
         self.username = username
         self.password = password
-
-    
-           
-    def authenticate(self,email, password):
-        
-        user = []
-        cur = c.cursor(cursor_factory=RealDictCursor)
-        cur.execute("SELECT *  from users WHERE email = %s")% self.email
-        user= cur.fetchone()
-        if user and safe_str_cmp(user.password.encode('utf-8'), password.encode('utf-8')):
-            return user
-    
-
-    
-    def identity(self,payload):
-        userid_table = {}
-        cur = c.cursor(cursor_factory=RealDictCursor)
-        cur.execute("SELECT username  from users")
-        userid_table= cur.fetchone()
-        user_id = payload['identity']
-        return userid_table.get(user_id, None)
-    
     
     @staticmethod
-    
     def post_user(user):
-        cur = c.cursor(cursor_factory=RealDictCursor)
+        cur = c.cursor(cursor_factory=DictCursor)
         SQL = ''' INSERT INTO users (username, email, password) 
                     VALUES(%s, %s, %s)'''
         cur.execute(SQL, (user.username, user.email, user.password))
 
 
     @staticmethod
-    
     def get_login(username, password):
-        cur = c.cursor(cursor_factory=RealDictCursor)
+        cur = c.cursor(cursor_factory=DictCursor)
         cur.execute("SELECT * FROM users WHERE username=%s AND password =%s",(username, password)) 
         dbuser = cur.fetchone()
         return  dbuser
 
-        
-
-
-
-class Ride_request(object):
+class Request(object):
     """ A class to handle actions related to requests"""
 
     def __init__(self, request_id, user_id, request_status, ride_id):
@@ -186,7 +156,7 @@ class Ride_request(object):
 
 
     def create_request(self,ride_request):
-        cur = c.cursor(cursor_factory=RealDictCursor)
+        cur = c.cursor(cursor_factory=DictCursor)
         SQL = ''' INSERT INTO requests (user_id, ride_id, request_status) 
                     VALUES(%s, %s, %s)'''
         cur.execute(SQL, (ride_request.user_id, ride_request.ride_id, ride_request.request_status))
@@ -194,7 +164,7 @@ class Ride_request(object):
 
     def fetch_all_requests(self):
         "a method to fetch all requests"
-        cur = c.cursor(cursor_factory=RealDictCursor)
+        cur = c.cursor(cursor_factory=DictCursor)
         cur.execute("SELECT *  from rides WHERE ride_status='False'")
         rows = cur.fetchall()
         for row in rows:
@@ -223,7 +193,7 @@ class Ride_request(object):
         for request_object in self.requests_list:
             if request_object['request_id'] == request_id:
                 self.requests_list.remove(request_object)
-                request_object['item'] = item
+                
                 request_object['ride_status'] = ride_status
                 request_object['origin'] = origin
                 request_object['status'] = status

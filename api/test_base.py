@@ -3,7 +3,7 @@ import unittest
 from flask import json
 
 # from app import create_app,
-from app.views import app
+from .views import app
 
 class rides_test(unittest.TestCase):
         
